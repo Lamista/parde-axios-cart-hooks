@@ -4,19 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import ServicesContext from './services/ServicesContext'
-import UserService from './services/UserService'
 
 document.title = "E-shop";
-
-// let userService = new UserService()
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ServicesContext.Provider value={{ userService: UserService }}>
-        <App />
-      </ServicesContext.Provider>
+      <App />
     </BrowserRouter>
   </React.StrictMode >,
   document.getElementById('root')

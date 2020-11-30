@@ -21,7 +21,6 @@ class ProductDetailsContainer extends Component {
     render() {
         if (this.state.product !== null) {
             const { id, ...otherProps } = this.state.product;
-            console.log(id)
             return (
                 <div className='container'>
                     <div key={id}>

@@ -2,23 +2,23 @@ import axios from 'axios';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import img from '../images/samsung.jpg'
-import ServicesContext from '../services/ServicesContext';
+import CurrentUserContext from '../context/CurrentUserContext';
 
 const ProductDetailsComponent = ({ id, title, image, description, price, quantity }) => {
-    const { userService } = useContext(ServicesContext);
+    const { currentUser, updateCartCount } = useContext(CurrentUserContext);
+
     const addToCart = () => {
         console.log(id);
-        console.log(userService.username);
+        console.log(currentUser);
         axios
-            .post(`https://itpro2017.herokuapp.com/api/users/${userService.username}/cart-products`,
+            .post(`https://itpro2017.herokuapp.com/api/users/${currentUser}/cart-products`,
                 {
                     "id": id,
                     "image": image,
                     "title": title
                 })
-            .then(() => console.log("success"))
+            .then(() => updateCartCount())
             .catch(err => console.log(err))
-
     }
 
     return (
@@ -35,7 +35,7 @@ const ProductDetailsComponent = ({ id, title, image, description, price, quantit
                 </div>
             </div>
             <div className='row ml-5 mt-3'>
-                <button className="btn btn-primary mr-1" onClick={addToCart}>Add to cart</button>
+                {currentUser === undefined ? <div></div> : <button className="btn btn-primary mr-1" onClick={addToCart}>Add to cart</button>}
                 <Link to={'/'} className="btn btn-secondary">Back</Link>
             </div>
         </div>

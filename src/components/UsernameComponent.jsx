@@ -1,46 +1,44 @@
-import React, { Component } from 'react'
-import ServicesContext from '../services/ServicesContext.js';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router';
+import CurrentUserContext from '../context/CurrentUserContext';
 
-class UsernameComponent extends Component {
-    constructor() {
-        super();
-        this.state = {
-            name: '',
-            submittedName: ''
-        }
+const UsernameComponent = () => {
+    const [name, setName] = useState('');
+
+    const history = useHistory();
+    const { currentUser, saveUser, updateCartCount } = useContext(CurrentUserContext);
+
+    const handleChange = (e) => {
+        setName(e.target.value)
     }
-    // componentDidMount = () => {
-    //     this.setState({ username: (UserService.username === 'anonymous' ? '' : UserService.username) })
-    // }
-    //     <ServicesContext.Consumer>
-    //         {({ userService }) => this.setState({ username: userService.username })}
-    //     </ServicesContext.Consumer>
-    // }
-    handleChange = (e) => {
-        this.setState({ name: e.target.value })
-    }
-    handleSubmit = (e) => {
+    const handleLogin = (e) => {
         e.preventDefault();
-        const name = e.target.username.value;
-        this.setState({ submittedName: name })
-        console.log(name);
-        let { userService } = this.context;
-        console.log(userService.username)
-        // userService.setUsername(name);
-        userService.username = name;
-        console.log(userService.username)
-        //cia noreciau susubmitinta username perduoti userservisui
+        const username = e.target.username.value;
+        saveUser(username);
     }
-    render() {
+    const handleLogout = (e) => {
+        e.preventDefault();
+        saveUser(undefined);
+        setName('');
+        updateCartCount(0);
+        history.push('/');
+    }
+
+    if (currentUser === undefined) {
         return (
-            <form className="navbar-form" onSubmit={this.handleSubmit}  >
-                <input onChange={this.handleChange} className="form-control mr-sm-2" type="text" name='username'
-                    placeholder={this.state.submittedName === '' ? "Username" : this.state.submittedName} value={this.state.name} />
+            <form className="navbar-form form-inline" onSubmit={handleLogin}  >
+                <input onChange={handleChange} className="form-control mr-sm-2" type="text" name='username'
+                    placeholder="Username" value={name} required />
+                <button className='btn btn-primary' type='submit'>Login</button>
             </form>
         )
     }
-}
+    return (
+        <div className="form-inline" >
+            <button className='btn btn-primary' onClick={handleLogout}>Logout</button>
+        </div>
+    )
 
-UsernameComponent.contextType = ServicesContext;
+}
 
 export default UsernameComponent

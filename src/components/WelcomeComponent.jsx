@@ -1,20 +1,15 @@
-import React from 'react'
+import React, { useContext } from 'react';
 
-import ServicesContext from '../services/ServicesContext.js';
+import CurrentUserContext from '../context/CurrentUserContext';
 
-const WelcomeMsg = () => (
+const WelcomeMsg = () => {
+    const { currentUser } = useContext(CurrentUserContext);
 
-    <ServicesContext.Consumer>
-
-        {({ userService }) => (
-            <div className='mx-auto' style={{ width: '400px' }}>
-                {/* <h3>Hello, {userService.getUsername()}!</h3> */}
-                <h3>Hello, {userService.username}!</h3>
-            </div >
-        )}
-
-    </ServicesContext.Consumer>
-
-)
+    return (
+        <div className='mx-auto' style={{ width: '400px' }}>
+            <h3>Hello {currentUser}!</h3>
+        </div >
+    )
+}
 
 export default WelcomeMsg

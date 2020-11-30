@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import ServicesContext from '../services/ServicesContext';
+import CurrentUserContext from '../context/CurrentUserContext';
 import CartInfo from './CartInfoComponent'
 import UsernameComponent from './UsernameComponent'
 
 const Navigation = () => {
-    const { userService } = useContext(ServicesContext);
+    const { currentUser } = useContext(CurrentUserContext);
     return (
         <nav className="navbar navbar-light navbar-expand" style={{ backgroundColor: "#e3f2fd" }}>
             <div className='container'>
@@ -15,7 +15,7 @@ const Navigation = () => {
                     <UsernameComponent />
                 </ul>
                 <ul className="nav navbar-nav navbar-right">
-                    <NavLink className="nav-link" to={`/users/${userService.username}/cart-products`}>
+                    <NavLink className="nav-link" to={`/users/${currentUser}/cart-products`}>
                         <CartInfo />
                     </NavLink>
                 </ul>
