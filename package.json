@@ -1,5 +1,6 @@
 {
   "name": "parde-su-axios",
+  "homepage": "/hello-world-calc/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
